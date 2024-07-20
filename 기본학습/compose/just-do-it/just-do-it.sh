@@ -1,3 +1,14 @@
+##### 기존에 배운 명령어로 실행하면, #####
+docker network create service
+docker run -d --network service --network-alias redis redis:alpine
+docker build -t web .
+docker run -p 8000:5000 -d --network service --stop-signal=SIGINT --network-alias web web
+docker rm -f $(docker ps -a -q)
+docker network rm -f $(docker network ls -q)
+##### 매우 행복해질 수 있음 #####
+
+--------------------------------------------------
+
 docker compose --help
 
 # compose.yaml 서비스에 build가 존재하는 모든 것들 빌드 진행
