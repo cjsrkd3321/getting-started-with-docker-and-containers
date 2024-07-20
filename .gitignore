@@ -1,3 +1,11 @@
+## API / PYTHON ##
+*.pyc
+
+## META / OS ##
+*.tmp
+.DS_Store
+.idea/
+
 # Logs
 logs
 *.log

@@ -1,0 +1,7 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: prod.dockerfile
+      args:
+        IMAGE_VERSION: 3.12-alpine

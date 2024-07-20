@@ -1,0 +1,26 @@
+services:
+  was:
+    build:
+      context: .
+      dockerfile: deploy/dev.dockerfile
+      args:
+        IMAGE_VERSION: 3.12-alpine
+    develop:
+      watch:
+        - action: sync
+          path: src/
+          target: /usr/src/app/src
+        - action: sync
+          path: spec/
+          target: /usr/src/app/spec
+        - action: rebuild
+          path: deploy/dev.dockerfile
+        - action: rebuild
+          path: package.json
+
+  web:
+    develop:
+      watch:
+        - action: sync+restart
+          path: default.conf
+          target: /etc/nginx/conf.d/default.conf

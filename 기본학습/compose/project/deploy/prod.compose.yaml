@@ -1,0 +1,7 @@
+services:
+  was:
+    build:
+      context: .
+      dockerfile: deploy/prod.dockerfile
+      args:
+        IMAGE_VERSION: 3.12-alpine

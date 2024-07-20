@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        IMAGE_VERSION: 3.12-alpine
+    ports:
+      - "8000:5000"
+    stop_signal: SIGINT # flask는 SIGINT를 받으면 gracefully shutdown 진행
+      
+  redis:
+    image: "redis:alpine"

@@ -1,0 +1,16 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+      args:
+        IMAGE_VERSION: 3.12-alpine
+    develop:
+      watch:
+        - action: sync # sync, rebuild, sync+restart(nginx 같은 애들)
+          path: ./app.py
+          target: /code/app.py
+          # path: .
+          # target: /code
+        - action: rebuild
+          path: dev.dockerfile
