@@ -8,8 +8,10 @@ docker compose logs
 # docker rm -v 와 달리 named volume도 삭제됨.
 docker compose down -v
 
-##### scaling 적용해보기 #####
+# 운영 환경에서 배포할 때는 --no-deps 꼭! 활용하기
 docker compose up --no-deps -d was --build
+
+##### scaling 적용해보기 #####
 docker compose scale was=10
 docker compose exec web nginx -s reload
 
