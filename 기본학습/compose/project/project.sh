@@ -31,4 +31,4 @@ docker compose -f compose.yaml -f deploy/prod.compose.yaml up -d
 # depends_on:
 #   db:
 #     condition: service_healthy
-#     restart: false
+#     restart: true
