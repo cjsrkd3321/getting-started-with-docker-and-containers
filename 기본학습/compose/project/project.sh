@@ -1,7 +1,7 @@
 # https://docs.docker.com/compose/compose-file/05-services/#healthcheck
 # https://docs.docker.com/compose/compose-file/05-services/#depends_on
 
-docker compose up -d
+docker compose up -d --build
 
 docker compose logs
 
