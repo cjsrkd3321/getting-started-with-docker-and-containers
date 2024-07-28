@@ -1,0 +1,26 @@
+# workflow 사용 가능 키워드: https://docs.github.com/ko/actions/using-workflows/workflow-syntax-for-github-actions
+name: simple workflow # 워크플로우 이름
+
+on: # 워크플로우 실행 조건 (https://docs.github.com/ko/actions/using-workflows/events-that-trigger-workflows)
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch: # 워크플로우 수동 실행 가능하도록 설정
+
+jobs:
+  simple-job: # job 이름
+    # runner 이미지 레포: https://github.com/actions/runner-images
+    runs-on: ubuntu-latest # 실행할 환경 명시
+
+    steps: # 순서대로 실행할 스크립트 명시
+      # - uses: actions/checkout@v4 # 현재 레포지토리 내용 가져오기($GITHUB_WORKSPACE 기준으로 체크 아웃)
+
+      - name: 스크립트
+        run: |
+          ls -a
+          env
+
+      - name: 컨텍스트 변수와 변수 # contexts: https://docs.github.com/ko/actions/learn-github-actions/contexts#about-contexts
+        # if: $RUNNER_OS == 'Linux'
+        if: ${{ runner.os == 'Linux' }} # 리터럴 문자열 표현 시 작은 따옴표 써야함! (https://docs.github.com/en/actions/learn-github-actions/expressions#literals)
+        run: echo "${{ runner.os }}" $RUNNER_OS # 워크플로우와 직접 관련된 것들만 위와 같이 '' 써야함. run은 상관 없음.

@@ -1,0 +1,35 @@
+name: simple cicd # 워크플로우 이름
+
+on: # 워크플로우 실행 조건
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch: # workflow 수동 실행 가능
+
+jobs:
+  simple: # 변경 가능
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4 # $GITHUB_WORKSPACE 기준으로 체크 아웃
+
+      - name: 배포 파일을 서버로 복사
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PEM_KEY }}
+          source: "*,!.github,!.git" # 모든 파일을 복사하되, .github/.git 폴더는 제외
+          target: "$HOME/${{ github.repository_id }}"
+
+      - name: 도커 배포
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PEM_KEY }}
+          script: |
+            cd $HOME/${{ github.repository_id }}
+            docker build -t ${{ github.repository }} .
+            docker rm -f ${{ github.repository_id }}
+            docker run -d -p 8080:5000 --name ${{ github.repository_id }} ${{ github.repository }}

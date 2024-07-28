@@ -1,0 +1,16 @@
+services:
+  was:
+    image: ${ECR_REPO_URL}:${IMAGE_TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+    ports:
+      - "8080:5000"
+    restart: always
+    networks:
+      - service
+
+networks:
+  service:
