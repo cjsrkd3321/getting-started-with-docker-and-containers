@@ -1,6 +1,7 @@
 docker volume create pg
 
 # -d 옵션이 없다면? foreground로 동작
+# windows 사용자의 경우 최상위 폴더의 "[필독] 윈도우 사용자분들께.txt"를 꼭 읽어주세요!
 docker run --name pg --rm \
     --memory="512m" --cpus="0.5" \
     -v pg:/var/lib/postgresql/data \
